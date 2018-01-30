@@ -33,7 +33,7 @@ class TimerTray extends Tray{
         if (this.mainWindow.isVisible()){
             this.mainWindow.hide();
         } else {
-            const yPosition = process.platform === 'win32' ? y - height : y;
+            const yPosition = process.platform === 'darwin' ? y : y - height;
 
             this.mainWindow.setBounds({
                 x: x - width/2,
