@@ -6,7 +6,7 @@ const TimerTray = require('./app/timer-tray');
 const MainWindow = require('./app/main_window');
 
 //import tray constructor for this app
-const { app, BrowserWindow } = electron;
+const { app, ipcMain } = electron;
 
 let mainWindow;
 let tray;
@@ -23,4 +23,18 @@ app.on('ready', () => {
     //receives an image path to be the icon and mainWindow;
     tray = new TimerTray(iconPath, mainWindow); //automatically get garbage collected after some time inactive if not instantiated to tray
 
+});
+
+ipcMain.on('update-timer', (event, remainingTime) => {
+    const iconName = process.platform == 'win32' ? 'windows-icon@2x.png' : 'iconTemplate.png';
+    const iconPath = path.join(__dirname, './src/assets/' + iconName);
+    if(process.platform == 'darwin'){
+        tray.setTitle(remainingTime);
+    } else{
+        tray.displayBalloon({
+        icon: iconPath,
+        title: '',
+        content: remainingTime
+        });
+    }
 });

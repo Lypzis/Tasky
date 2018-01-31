@@ -17,7 +17,9 @@ class MainWindow extends BrowserWindow{
             frame: false, //removes the taskbar
             resizable: false, //not resizable
             show: false, //not showing
-            skipTaskbar: true //does not show process in taskbar(Windows platform)
+            skipTaskbar: true, //does not show process in taskbar(Windows platform)
+            webPreferences: { backgroundThrottling: false } //VERY IMPORTANT! make application runs at full speed
+                                                            //even when not focused
         });
 
         this.loadURL(url);
